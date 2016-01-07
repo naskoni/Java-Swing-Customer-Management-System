@@ -22,6 +22,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import cms.business.Operations;
+import cms.controllers.CustomerPanelController;
 import cms.persistance.TableModelPersister;
 
 public final class MainFrame {
@@ -115,12 +116,14 @@ public final class MainFrame {
 	private class MainController implements ActionListener, MouseListener {
 		
 		private final Operations operations = new Operations();
+		private final CustomerPanelController customerPanelController = 
+				new CustomerPanelController();
 		
 		public void actionPerformed(ActionEvent ae) {
 			String command = ae.getActionCommand();  
 			if (command.equals("Add"))  {				
-				CustomerPanel panel = new CustomerPanel();
-				operations.addNewCustomer(tableModel, panel);	
+				//CustomerPanel panel = new CustomerPanel();
+				operations.addNewCustomer(tableModel, customerPanelController.getCustomerPanel());	
 			} else if (command.equals("Edit"))  {
 				this.editCustomer();
 			} else if (command.equals("Delete")) {

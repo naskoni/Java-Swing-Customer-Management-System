@@ -17,6 +17,18 @@ import cms.view.CustomerPanel;
 public class CustomerPanelController implements KeyListener, FocusListener, ActionListener {
 	
 	private final CustomerPanel customerPanel = new CustomerPanel();
+
+	public CustomerPanelController() {
+		customerPanel.getLocationTown().addKeyListener(this);
+		customerPanel.getContractDateTextField().addFocusListener(this);
+		customerPanel.getContractDateTextField().addKeyListener(this);
+		customerPanel.getContractFileButton().addActionListener(this);
+		customerPanel.getLogoFileButton().addActionListener(this);
+	}
+	
+	public CustomerPanel getCustomerPanel() {
+		return customerPanel;
+	}
 	
 	public void keyTyped(KeyEvent e) {}			
 	
