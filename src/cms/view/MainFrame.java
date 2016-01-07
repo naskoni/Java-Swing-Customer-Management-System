@@ -115,14 +115,13 @@ public final class MainFrame {
 
 	private class MainController implements ActionListener, MouseListener {
 		
-		private final Operations operations = new Operations();
-		private final CustomerPanelController customerPanelController = 
-				new CustomerPanelController();
+		private final Operations operations = new Operations();		
 		
 		public void actionPerformed(ActionEvent ae) {
 			String command = ae.getActionCommand();  
 			if (command.equals("Add"))  {				
 				//CustomerPanel panel = new CustomerPanel();
+				CustomerPanelController customerPanelController = new CustomerPanelController();
 				operations.addNewCustomer(tableModel, customerPanelController.getCustomerPanel());	
 			} else if (command.equals("Edit"))  {
 				this.editCustomer();
@@ -153,8 +152,9 @@ public final class MainFrame {
 		
 		private void editCustomer() {
 			int rowSelected = table.getSelectedRow();
-			CustomerPanel customerPanel = new CustomerPanel();
-			operations.editCustomer(tableModel, customerPanel, rowSelected);
+			//CustomerPanel customerPanel = new CustomerPanel();
+			CustomerPanelController customerPanelController = new CustomerPanelController();			
+			operations.editCustomer(tableModel, customerPanelController.getCustomerPanel(), rowSelected);
 			this.showDetailedInfo(tableModel, detailedPanel, rowSelected);
 		}
 		
