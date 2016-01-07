@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JFileChooser;
 
@@ -64,29 +65,18 @@ public class CustomerPanelController implements KeyListener, FocusListener, Acti
 	@Override
 	public void focusLost(FocusEvent e) {
 		String content = customerPanel.getContractDateTextField().getText();
-		if (!content.isEmpty()) {
-//			String fullFormat = "dd.MM.yyyy";
-//			String shortFormat = "dd.MM";
-//			SimpleDateFormat sdf = new SimpleDateFormat(fullFormat);
-//			sdf.setLenient(false);
-//			try {				
-//				if (content.length() > 5) {
-//					Date date = sdf.parse(content);
-//					contractDateTextField.setText(sdf.format(date));
-//				} else {
-//					sdf = new SimpleDateFormat(shortFormat);
-//					@SuppressWarnings("unused")
-//					Date date = sdf.parse(content);
-//					Calendar c = Calendar.getInstance();
-//					String newDate = content + "." + c.get(Calendar.YEAR);
-//					contractDateTextField.setText(newDate);
-//				}				
-//			} catch (ParseException pe) {
-//				JOptionPane.showMessageDialog(null, INVALID_DATE);
-//				contractDateTextField.requestFocus();
-//			}			
-		}			
-	}		
+		if (!content.isEmpty() && content.length() <= 5) {					
+			try {				
+				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM");
+				@SuppressWarnings("unused")
+				Date date = sdf.parse(content);
+				Calendar c = Calendar.getInstance();
+				String newDate = content + "." + c.get(Calendar.YEAR);
+				customerPanel.getContractDateTextField().setText(newDate);
+			} catch (ParseException pe) {	
+			}			
+		}		
+	}	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
