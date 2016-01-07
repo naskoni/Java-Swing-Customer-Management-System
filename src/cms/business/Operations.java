@@ -30,7 +30,7 @@ public class Operations {
 	public Operations() {		
 	}
 
-	public void addNewClient(DefaultTableModel tableModel, CustomerPanel customerPanel) {
+	public void addNewCustomer(DefaultTableModel tableModel, CustomerPanel customerPanel) {
 		String customerName = "";
 		String date;
 		int input = 1;

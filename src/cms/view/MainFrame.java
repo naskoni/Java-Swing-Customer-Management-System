@@ -120,9 +120,9 @@ public final class MainFrame {
 			String command = ae.getActionCommand();  
 			if (command.equals("Add"))  {				
 				CustomerPanel panel = new CustomerPanel();
-				operations.addNewClient(tableModel, panel);	
+				operations.addNewCustomer(tableModel, panel);	
 			} else if (command.equals("Edit"))  {
-				this.editClient();
+				this.editCustomer();
 			} else if (command.equals("Delete")) {
 				int rowSelected = table.getSelectedRow();
 				operations.deleteCustomer(tableModel, rowSelected);
@@ -133,7 +133,7 @@ public final class MainFrame {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() == 2) {
-				this.editClient();
+				this.editCustomer();
 			} else if (e.getClickCount() == 1) {				
 				int rowSelected = table.getSelectedRow();
 				this.showDetailedInfo(tableModel, detailedPanel, rowSelected);
@@ -148,10 +148,10 @@ public final class MainFrame {
 
 		public void mouseReleased(MouseEvent e) {}
 		
-		private void editClient() {
+		private void editCustomer() {
 			int rowSelected = table.getSelectedRow();
-			CustomerPanel panel = new CustomerPanel();
-			operations.editCustomer(tableModel, panel, rowSelected);
+			CustomerPanel customerPanel = new CustomerPanel();
+			operations.editCustomer(tableModel, customerPanel, rowSelected);
 			this.showDetailedInfo(tableModel, detailedPanel, rowSelected);
 		}
 		
