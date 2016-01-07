@@ -44,7 +44,7 @@ public class Operations {
 			String[] newCustomerDetails = new String[COLUMNS_COUNT];
 			newCustomerDetails[0] = customerName;	
 			newCustomerDetails[1] = customerPanel.getLocationTown().getSelectedItem().toString();
-			newCustomerDetails[2] = customerPanel.getNotesTextArea().getText().trim();
+			newCustomerDetails[2] = customerPanel.getNotesTextArea().getText().trim();			
 			newCustomerDetails[3] = date;
 			newCustomerDetails[4] = customerPanel.getContractFilePath();
 			newCustomerDetails[5] = customerPanel.getLogoFilePath();

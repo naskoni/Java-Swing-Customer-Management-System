@@ -1,8 +1,9 @@
 package cms.business;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
@@ -28,13 +29,11 @@ public class Validator {
 			optionDialogs.displayErrorMessage(NAME_IS_USED);
 			return false;				
 		} else if (!date.isEmpty()) {
-			String format = "dd.MM.yyyy";		
-			SimpleDateFormat sdf = new SimpleDateFormat(format);
-			sdf.setLenient(false);
-			try {	
-				@SuppressWarnings("unused")
-				Date d = sdf.parse(date);							 			
-			} catch (ParseException pe) {
+			try {
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");				
+		    	@SuppressWarnings("unused")
+				LocalDate d = LocalDate.parse(date, formatter);							 			
+			} catch (DateTimeParseException pe) {
 				JOptionPane.showMessageDialog(null, INVALID_DATE);
 				return false;
 			}
