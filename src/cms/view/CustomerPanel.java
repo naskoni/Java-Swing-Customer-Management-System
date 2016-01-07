@@ -3,6 +3,8 @@ package cms.view;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -53,7 +55,7 @@ public class CustomerPanel extends JPanel {
 		
 		locationTown = new JComboBox(TOWNS);		
 		locationTown.setSelectedIndex(0);
-		//locationTown.addKeyListener(new NumKeyListener());
+		locationTown.addKeyListener(new NumKeyListener());
 		
 		notesTextArea = new JTextArea();
 		notesTextArea.setWrapStyleWord(true);
@@ -66,14 +68,8 @@ public class CustomerPanel extends JPanel {
 		notesPane.setPreferredSize(new Dimension(10, 1));		
 		
 		contractDateTextField = new JTextField();
-		//contractDateTextField.addFocusListener(new CustFocusListener());
-		//contractDateTextField.addKeyListener(new CtrlArrowKeyListener());
-		
 		contractFileButton = new JButton("Choose contract...");
-		//contractFileButton.addActionListener(new FileButtonsListener());
 		logoFileButton = new JButton("Choose logo...");
-		//logoFileButton.addActionListener(new FileButtonsListener());
-		
 		contractFilePath = new String();
 		logoFilePath = new String();
 		
@@ -142,114 +138,25 @@ public class CustomerPanel extends JPanel {
 	}
 
 	
-//	private class NumKeyListener implements KeyListener {		
-//		
-//		public void keyTyped(KeyEvent e) {}			
-//		
-//		@Override
-//		public void keyReleased(KeyEvent e) {
-//			if (e.getKeyChar() == '1') {
-//				locationTown.setSelectedIndex(1);
-//			} else if (e.getKeyChar() == '2') {
-//				locationTown.setSelectedIndex(2);
-//			} else if (e.getKeyChar() == '3') {
-//				locationTown.setSelectedIndex(3);
-//			} else if (e.getKeyChar() == '4') {
-//				locationTown.setSelectedIndex(4);
-//			} else {
-//				locationTown.setEditable(true);
-//			}				
-//		}			
-//		
-//		public void keyPressed(KeyEvent e) {}
-//	}
-//	
-//	private class CtrlArrowKeyListener implements KeyListener {
-//		
-//		@Override
-//		public void keyPressed(KeyEvent ke) {
-//			if (ke.getKeyCode() == KeyEvent.VK_UP && ke.isControlDown()) {
-//				int value = 1;
-//				addDay(value);
-//			}
-//			else if (ke.getKeyCode() == KeyEvent.VK_DOWN && ke.isControlDown()) {
-//				int value = -1;
-//				addDay(value);
-//			}			
-//		}
-//		
-//		private void addDay(int value) {
-//			String content = contractDateTextField.getText();
-//			String format = "dd.MM.yyyy";
-//			SimpleDateFormat sdf = new SimpleDateFormat(format);
-//			sdf.setLenient(false);
-//			try {	
-//			Calendar c = Calendar.getInstance();
-//			c.setTime(sdf.parse(content));
-//			c.add(Calendar.DATE, value);
-//			contractDateTextField.setText(sdf.format(c.getTime()));
-//			} catch (ParseException pe) {
-//				//JOptionPane.showMessageDialog(null, INVALID_DATE);					
-//			}			
-//		}
-//
-//		public void keyReleased(KeyEvent ke) {}
-//		
-//		public void keyTyped(KeyEvent ke) {}
-//		
-//	}
-//	
-//	private class CustFocusListener implements FocusListener {
-//		
-//		public void focusGained(FocusEvent e) {}
-//
-//		@Override
-//		public void focusLost(FocusEvent e) {
-//			String content = contractDateTextField.getText();
-//			if (!content.isEmpty()) {
-////				String fullFormat = "dd.MM.yyyy";
-////				String shortFormat = "dd.MM";
-////				SimpleDateFormat sdf = new SimpleDateFormat(fullFormat);
-////				sdf.setLenient(false);
-////				try {				
-////					if (content.length() > 5) {
-////						Date date = sdf.parse(content);
-////						contractDateTextField.setText(sdf.format(date));
-////					} else {
-////						sdf = new SimpleDateFormat(shortFormat);
-////						@SuppressWarnings("unused")
-////						Date date = sdf.parse(content);
-////						Calendar c = Calendar.getInstance();
-////						String newDate = content + "." + c.get(Calendar.YEAR);
-////						contractDateTextField.setText(newDate);
-////					}				
-////				} catch (ParseException pe) {
-////					JOptionPane.showMessageDialog(null, INVALID_DATE);
-////					contractDateTextField.requestFocus();
-////				}			
-//			}			
-//		}		
-//	}
-//	
-//	private class FileButtonsListener implements ActionListener {
-//
-//		@Override
-//		public void actionPerformed(ActionEvent e) {
-//			JFileChooser fc = new JFileChooser();
-//			
-//			if (e.getActionCommand() == "Choose contract...") {
-//				int returnValue = fc.showOpenDialog(contractFileButton);			
-//				if (returnValue == JFileChooser.APPROVE_OPTION) {
-//					setContractFilePath(fc.getSelectedFile().getAbsolutePath());					
-//				}
-//			}
-//			
-//			if (e.getActionCommand() == "Choose logo...") {
-//				int returnValue = fc.showOpenDialog(logoFileButton);			
-//				if (returnValue == JFileChooser.APPROVE_OPTION) {
-//					setLogoFilePath(fc.getSelectedFile().getAbsolutePath());					
-//				}
-//			}				
-//		}		
-//	}			
+	private class NumKeyListener implements KeyListener {		
+		
+		public void keyTyped(KeyEvent e) {}			
+		
+		@Override
+		public void keyReleased(KeyEvent e) {
+			if (e.getKeyChar() == '1') {
+				locationTown.setSelectedIndex(1);
+			} else if (e.getKeyChar() == '2') {
+				locationTown.setSelectedIndex(2);
+			} else if (e.getKeyChar() == '3') {
+				locationTown.setSelectedIndex(3);
+			} else if (e.getKeyChar() == '4') {
+				locationTown.setSelectedIndex(4);
+			} else {
+				locationTown.setEditable(true);
+			}				
+		}			
+		
+		public void keyPressed(KeyEvent e) {}
+	}
 }

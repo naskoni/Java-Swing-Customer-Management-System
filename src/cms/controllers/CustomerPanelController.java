@@ -18,8 +18,7 @@ public class CustomerPanelController implements KeyListener, FocusListener, Acti
 	
 	private final CustomerPanel customerPanel = new CustomerPanel();
 
-	public CustomerPanelController() {
-		customerPanel.getLocationTown().addKeyListener(this);
+	public CustomerPanelController() {		
 		customerPanel.getContractDateTextField().addFocusListener(this);
 		customerPanel.getContractDateTextField().addKeyListener(this);
 		customerPanel.getContractFileButton().addActionListener(this);
@@ -33,19 +32,7 @@ public class CustomerPanelController implements KeyListener, FocusListener, Acti
 	public void keyTyped(KeyEvent e) {}			
 	
 	@Override
-	public void keyReleased(KeyEvent ke) {
-//		if (ke.getKeyChar() == '1') {
-//			customerPanel.getLocationTown().setSelectedIndex(1);
-//		} else if (ke.getKeyChar() == '2') {
-//			customerPanel.getLocationTown().setSelectedIndex(2);
-//		} else if (ke.getKeyChar() == '3') {
-//			customerPanel.getLocationTown().setSelectedIndex(3);
-//		} else if (ke.getKeyChar() == '4') {
-//			customerPanel.getLocationTown().setSelectedIndex(4);
-//		} else {
-//			customerPanel.getLocationTown().setEditable(true);
-//		}				
-	}				
+	public void keyReleased(KeyEvent ke) {}					
 	
 	@Override
 	public void keyPressed(KeyEvent ke) {
