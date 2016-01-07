@@ -125,7 +125,7 @@ public final class MainFrame {
 				this.editClient();
 			} else if (command.equals("Delete")) {
 				int rowSelected = table.getSelectedRow();
-				operations.deleteClient(tableModel, rowSelected);
+				operations.deleteCustomer(tableModel, rowSelected);
 				this.showDetailedInfo(tableModel, detailedPanel, -1);
 			}  	
 		}
@@ -151,7 +151,7 @@ public final class MainFrame {
 		private void editClient() {
 			int rowSelected = table.getSelectedRow();
 			CustomerPanel panel = new CustomerPanel();
-			operations.editClient(tableModel, panel, rowSelected);
+			operations.editCustomer(tableModel, panel, rowSelected);
 			this.showDetailedInfo(tableModel, detailedPanel, rowSelected);
 		}
 		

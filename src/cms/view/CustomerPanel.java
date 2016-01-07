@@ -104,7 +104,7 @@ public class CustomerPanel extends JPanel {
 		add(panel);
 	}
 	
-	public JTextField getCustNameTextField() {
+	public JTextField getCustomerNameTextField() {
 		return customerNameTextField;
 	}
 	

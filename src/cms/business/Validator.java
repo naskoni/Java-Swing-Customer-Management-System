@@ -20,11 +20,11 @@ public class Validator {
 	public Validator() {		
 	}
 
-	public boolean validateNameAndDate(Set<String> usedNames, String custName, String date) {		
-		if (custName.isEmpty()) {
+	public boolean validateNameAndDate(Set<String> usedNames, String customerName, String date) {		
+		if (customerName.isEmpty()) {
 			optionDialogs.displayErrorMessage(NAME_MUST_BE_FILLED);			
 			return false;					
-		} else if (usedNames.contains(custName.toUpperCase())) {
+		} else if (usedNames.contains(customerName.toUpperCase())) {
 			optionDialogs.displayErrorMessage(NAME_IS_USED);
 			return false;				
 		} else if (!date.isEmpty()) {

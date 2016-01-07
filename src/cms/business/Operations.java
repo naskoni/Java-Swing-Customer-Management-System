@@ -13,14 +13,14 @@ import cms.view.OptionDialogs;
 public class Operations {
 
 	private static final int COLUMNS_COUNT = 6;	
-	private static final String ADD_CLIENT = "Add new client: ";
-	private static final String CLIENT_ADDED = "Added new client.";
+	private static final String ADD_CUSTOMER = "Add new customer: ";
+	private static final String CUSTOMER_ADDED = "Added new customer.";
 	private static final String CHOOSE_ROW_TO_EDIT = "Please, select a row for editing!";
 	private static final String CHOOSE_ROW_TO_DELETE = "Please, select a row for deleting!";	
-	private static final String EDIT_CLIENT = "Edit client information: ";
+	private static final String EDIT_CUSTOMER = "Edit customer information: ";
 	private static final String INFO_EDITED = "Information is edited.";
 	private static final String INFO_NOT_EDITED = "No changes have been made.";	
-	private static final String CLIENT_DELETED = "Information for selected client is deleted.";	
+	private static final String CUSTOMER_DELETED = "Information for selected customer is deleted.";	
 	
 	private static Validator validator = new Validator();
 	private static OptionDialogs optionDialogs = new OptionDialogs();
@@ -30,92 +30,92 @@ public class Operations {
 	public Operations() {		
 	}
 
-	public void addNewClient(DefaultTableModel tableModel, CustomerPanel panel) {
-		String custName = "";
+	public void addNewClient(DefaultTableModel tableModel, CustomerPanel customerPanel) {
+		String customerName = "";
 		String date;
 		int input = 1;
 		do {
-			input = optionDialogs.displayClientPanel(ADD_CLIENT, panel);
-			custName = panel.getCustNameTextField().getText().trim();
-			date = panel.getContractDateTextField().getText();
-		} while (input == 0 && !validator.validateNameAndDate(usedNames, custName, date));		
+			input = optionDialogs.displayCustomerPanel(ADD_CUSTOMER, customerPanel);
+			customerName = customerPanel.getCustomerNameTextField().getText().trim();
+			date = customerPanel.getContractDateTextField().getText();
+		} while (input == 0 && !validator.validateNameAndDate(usedNames, customerName, date));		
 		
 		if (input == 0) {
-			String[] newClientDetails = new String[COLUMNS_COUNT];
-			newClientDetails[0] = custName;	
-			newClientDetails[1] = panel.getLocationTown().getSelectedItem().toString();
-			newClientDetails[2] = panel.getNotesTextArea().getText().trim();
-			newClientDetails[3] = date;
-			newClientDetails[4] = panel.getContractFilePath();
-			newClientDetails[5] = panel.getLogoFilePath();
+			String[] newCustomerDetails = new String[COLUMNS_COUNT];
+			newCustomerDetails[0] = customerName;	
+			newCustomerDetails[1] = customerPanel.getLocationTown().getSelectedItem().toString();
+			newCustomerDetails[2] = customerPanel.getNotesTextArea().getText().trim();
+			newCustomerDetails[3] = date;
+			newCustomerDetails[4] = customerPanel.getContractFilePath();
+			newCustomerDetails[5] = customerPanel.getLogoFilePath();
 
-			tableModel.addRow(newClientDetails);
-			usedNames.add(custName.toUpperCase());
+			tableModel.addRow(newCustomerDetails);
+			usedNames.add(customerName.toUpperCase());
 			tableModelPersister.save(tableModel);
-        	optionDialogs.displayInfoMessage(CLIENT_ADDED);
+        	optionDialogs.displayInfoMessage(CUSTOMER_ADDED);
 		}  
 	}
 	
-	public void editClient(DefaultTableModel tableModel, 
-			CustomerPanel panel, int rowSelected) {
+	public void editCustomer(DefaultTableModel tableModel, 
+			CustomerPanel customerPanel, int rowSelected) {
 		if (rowSelected == -1) {
 			optionDialogs.displayErrorMessage(CHOOSE_ROW_TO_EDIT);
 		} else {
-			String[] oldClientDetails = readRow(tableModel, rowSelected);			
+			String[] oldCustomerDetails = readRow(tableModel, rowSelected);			
 
-			panel.getCustNameTextField().setText(oldClientDetails[0]);
-			panel.getLocationTown().setEditable(true);
-			panel.getLocationTown().getEditor().setItem(oldClientDetails[1]);
-			panel.getNotesTextArea().setText(oldClientDetails[2]);
-			panel.getContractDateTextField().setText(oldClientDetails[3]);
-			panel.setContractFilePath(oldClientDetails[4]);
-			panel.setLogoFilePath(oldClientDetails[5]);
+			customerPanel.getCustomerNameTextField().setText(oldCustomerDetails[0]);
+			customerPanel.getLocationTown().setEditable(true);
+			customerPanel.getLocationTown().getEditor().setItem(oldCustomerDetails[1]);
+			customerPanel.getNotesTextArea().setText(oldCustomerDetails[2]);
+			customerPanel.getContractDateTextField().setText(oldCustomerDetails[3]);
+			customerPanel.setContractFilePath(oldCustomerDetails[4]);
+			customerPanel.setLogoFilePath(oldCustomerDetails[5]);
 			
-			usedNames.remove(oldClientDetails[0].toUpperCase());
+			usedNames.remove(oldCustomerDetails[0].toUpperCase());
 			
-			String custName = "";
+			String customerName = "";
 			String date;
 			int input = 1;			
 			do {
-				input = optionDialogs.displayClientPanel(EDIT_CLIENT, panel);
-				custName = panel.getCustNameTextField().getText().trim();
-				date = panel.getContractDateTextField().getText();
-			} while (input == 0 && !validator.validateNameAndDate(usedNames, custName, date));			
+				input = optionDialogs.displayCustomerPanel(EDIT_CUSTOMER, customerPanel);
+				customerName = customerPanel.getCustomerNameTextField().getText().trim();
+				date = customerPanel.getContractDateTextField().getText();
+			} while (input == 0 && !validator.validateNameAndDate(usedNames, customerName, date));			
 			
 			if (input == 0) {
-				String[] newClientDetails = new String[COLUMNS_COUNT];
-				newClientDetails[0] = custName;	
-				newClientDetails[1] = panel.getLocationTown().getEditor().getItem().toString();
-				newClientDetails[2] = panel.getNotesTextArea().getText().trim();
-				newClientDetails[3] = panel.getContractDateTextField().getText();
-				newClientDetails[4] = panel.getContractFilePath();
-				newClientDetails[5] = panel.getLogoFilePath();
+				String[] newCustomerDetails = new String[COLUMNS_COUNT];
+				newCustomerDetails[0] = customerName;	
+				newCustomerDetails[1] = customerPanel.getLocationTown().getEditor().getItem().toString();
+				newCustomerDetails[2] = customerPanel.getNotesTextArea().getText().trim();
+				newCustomerDetails[3] = customerPanel.getContractDateTextField().getText();
+				newCustomerDetails[4] = customerPanel.getContractFilePath();
+				newCustomerDetails[5] = customerPanel.getLogoFilePath();
 				
-				if (Arrays.equals(oldClientDetails, newClientDetails)) {
-					usedNames.add(oldClientDetails[0].toUpperCase());
+				if (Arrays.equals(oldCustomerDetails, newCustomerDetails)) {
+					usedNames.add(oldCustomerDetails[0].toUpperCase());
 					optionDialogs.displayInfoMessage(INFO_NOT_EDITED);
 				} else {
-					tableModel.insertRow(rowSelected, newClientDetails);
+					tableModel.insertRow(rowSelected, newCustomerDetails);
 					tableModel.removeRow(rowSelected + 1);
 					tableModelPersister.save(tableModel);
-					usedNames.add(custName.toUpperCase());
+					usedNames.add(customerName.toUpperCase());
 					optionDialogs.displayInfoMessage(INFO_EDITED);
 				}	
 			} else {
-				usedNames.add(oldClientDetails[0].toUpperCase());
+				usedNames.add(oldCustomerDetails[0].toUpperCase());
 			}	
 		}
 	}
 
-	public void deleteClient(DefaultTableModel tableModel, int rowSelected) {
+	public void deleteCustomer(DefaultTableModel tableModel, int rowSelected) {
 		if (rowSelected == -1) {
 			optionDialogs.displayErrorMessage(CHOOSE_ROW_TO_DELETE);			
 		} else {
-			String custName = tableModel.getValueAt(rowSelected, 0).toString();
-			usedNames.remove(custName.toUpperCase());
+			String customerName = tableModel.getValueAt(rowSelected, 0).toString();
+			usedNames.remove(customerName.toUpperCase());
 			tableModel.removeRow(rowSelected);
 			tableModelPersister.save(tableModel);
-			optionDialogs.displayInfoMessage(CLIENT_DELETED);
+			optionDialogs.displayInfoMessage(CUSTOMER_DELETED);
 		}
 	}
 

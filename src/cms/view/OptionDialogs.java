@@ -12,7 +12,7 @@ public class OptionDialogs {
 	public OptionDialogs() {		
 	}
 	
-	public int displayClientPanel(String message, CustomerPanel panel) {
+	public int displayCustomerPanel(String message, CustomerPanel panel) {
 		return JOptionPane.showOptionDialog(null,
 				panel, message, JOptionPane.NO_OPTION, 
 				JOptionPane.DEFAULT_OPTION,	null, OPTIONS , null);
