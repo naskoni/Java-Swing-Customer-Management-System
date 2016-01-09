@@ -24,6 +24,7 @@ public class CustomerPanelController implements KeyListener, FocusListener, Acti
 		customerPanel.getContractDateTextField().addKeyListener(this);
 		customerPanel.getContractFileButton().addActionListener(this);
 		customerPanel.getLogoFileButton().addActionListener(this);
+		customerPanel.getLocationTown().addKeyListener(new NumKeyListener());
 	}
 	
 	public CustomerPanel getCustomerPanel() {
@@ -95,6 +96,28 @@ public class CustomerPanelController implements KeyListener, FocusListener, Acti
 				customerPanel.setLogoFilePath(fc.getSelectedFile().getAbsolutePath());					
 			}
 		}				
-	}		
+	}
+	
+	private class NumKeyListener implements KeyListener {		
+			
+		public void keyTyped(KeyEvent e) {}			
+		
+		@Override
+		public void keyReleased(KeyEvent e) {
+			if (e.getKeyChar() == '1') {
+				customerPanel.getLocationTown().setSelectedIndex(1);
+			} else if (e.getKeyChar() == '2') {
+				customerPanel.getLocationTown().setSelectedIndex(2);
+			} else if (e.getKeyChar() == '3') {
+				customerPanel.getLocationTown().setSelectedIndex(3);
+			} else if (e.getKeyChar() == '4') {
+				customerPanel.getLocationTown().setSelectedIndex(4);
+			} else {
+				customerPanel.getLocationTown().setEditable(true);
+			}				
+		}			
+		
+		public void keyPressed(KeyEvent e) {}
+	}	
 }			
 

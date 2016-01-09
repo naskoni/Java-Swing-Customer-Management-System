@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_66" class="java.beans.XMLDecoder">
+ <object class="javax.swing.table.DefaultTableModel">
+  <void property="columnIdentifiers">
+   <object class="java.util.Vector">
+    <void method="add">
+     <string>Name</string>
+    </void>
+    <void method="add">
+     <string>Location</string>
+    </void>
+    <void method="add">
+     <string>Notes</string>
+    </void>
+    <void method="add">
+     <string>Date of signing the contract</string>
+    </void>
+    <void method="add">
+     <string>Contract</string>
+    </void>
+    <void method="add">
+     <string>Logo</string>
+    </void>
+   </object>
+  </void>
+  <void method="addRow">
+   <object class="java.util.Vector">
+    <void method="add">
+     <string>sdgsdg</string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string>12.12.1212</string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+   </object>
+  </void>
+  <void method="addRow">
+   <object class="java.util.Vector">
+    <void method="add">
+     <string>223</string>
+    </void>
+    <void method="add">
+     <string>Burgas</string>
+    </void>
+    <void method="add">
+     <string>dgwewwet</string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+   </object>
+  </void>
+  <void method="addRow">
+   <object class="java.util.Vector">
+    <void method="add">
+     <string>23t53t32tsd</string>
+    </void>
+    <void method="add">
+     <string>Burgas</string>
+    </void>
+    <void method="add">
+     <string>sdgasdogjaosdfgo</string>
+    </void>
+    <void method="add">
+     <string>12.12.2012</string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+   </object>
+  </void>
+  <void method="addRow">
+   <object class="java.util.Vector">
+    <void method="add">
+     <string>ty</string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string>C:\Users\MIMI\Documents\8hw.doc</string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+   </object>
+  </void>
+  <void method="addRow">
+   <object class="java.util.Vector">
+    <void method="add">
+     <string>fhasdfh</string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string>C:\Users\MIMI\Documents\8hw.doc</string>
+    </void>
+    <void method="add">
+     <string>C:\Users\MIMI\Documents\Photo Atanas Atanasov (1).jpg</string>
+    </void>
+   </object>
+  </void>
+  <void method="addRow">
+   <object class="java.util.Vector">
+    <void method="add">
+     <string>dfhsdfhdf</string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+    <void method="add">
+     <string>C:\Users\MIMI\Documents\razkroiafhghdfghdfighafjghadfghadfhgjkadfhgjkhdfiaghdfjghadfklghkadflghkadfhgkadfhgjkadfhgiadfhgjkadfhgkadfhg.txt</string>
+    </void>
+    <void method="add">
+     <string></string>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

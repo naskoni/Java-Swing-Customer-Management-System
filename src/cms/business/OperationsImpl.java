@@ -5,12 +5,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
+import cms.interfaces.Operations;
+import cms.interfaces.Persister;
 import cms.persistance.TableModelPersister;
 import cms.view.CustomerPanel;
 import cms.view.OptionDialogs;
 
-public class Operations {
+public class OperationsImpl implements Operations {
 
 	private static final int COLUMNS_COUNT = 6;	
 	private static final String ADD_CUSTOMER = "Add new customer: ";
@@ -24,13 +27,17 @@ public class Operations {
 	
 	private static Validator validator = new Validator();
 	private static OptionDialogs optionDialogs = new OptionDialogs();
-	private static TableModelPersister tableModelPersister = new TableModelPersister();
+	private static Persister persister = new TableModelPersister();
 	private static Set<String> usedNames = new HashSet<>();
 	
-	public Operations() {		
+	public OperationsImpl() {		
 	}
 
-	public void addNewCustomer(DefaultTableModel tableModel, CustomerPanel customerPanel) {
+	/* (non-Javadoc)
+	 * @see cms.business.Operations#addNewCustomer(javax.swing.table.TableModel, cms.view.CustomerPanel)
+	 */
+	@Override
+	public void addNewCustomer(TableModel tableModel, CustomerPanel customerPanel) {
 		String customerName = "";
 		String date;
 		int input = 1;
@@ -49,14 +56,18 @@ public class Operations {
 			newCustomerDetails[4] = customerPanel.getContractFilePath();
 			newCustomerDetails[5] = customerPanel.getLogoFilePath();
 
-			tableModel.addRow(newCustomerDetails);
+			((DefaultTableModel) tableModel).addRow(newCustomerDetails);
 			usedNames.add(customerName.toUpperCase());
-			tableModelPersister.save(tableModel);
+			persister.save(tableModel);
         	optionDialogs.displayInfoMessage(CUSTOMER_ADDED);
 		}  
 	}
 	
-	public void editCustomer(DefaultTableModel tableModel, 
+	/* (non-Javadoc)
+	 * @see cms.business.Operations#editCustomer(javax.swing.table.TableModel, cms.view.CustomerPanel, int)
+	 */
+	@Override
+	public void editCustomer(TableModel tableModel, 
 			CustomerPanel customerPanel, int rowSelected) {
 		if (rowSelected == -1) {
 			optionDialogs.displayErrorMessage(CHOOSE_ROW_TO_EDIT);
@@ -95,9 +106,9 @@ public class Operations {
 					usedNames.add(oldCustomerDetails[0].toUpperCase());
 					optionDialogs.displayInfoMessage(INFO_NOT_EDITED);
 				} else {
-					tableModel.insertRow(rowSelected, newCustomerDetails);
-					tableModel.removeRow(rowSelected + 1);
-					tableModelPersister.save(tableModel);
+					((DefaultTableModel) tableModel).insertRow(rowSelected, newCustomerDetails);
+					((DefaultTableModel) tableModel).removeRow(rowSelected + 1);
+					persister.save(tableModel);
 					usedNames.add(customerName.toUpperCase());
 					optionDialogs.displayInfoMessage(INFO_EDITED);
 				}	
@@ -107,19 +118,27 @@ public class Operations {
 		}
 	}
 
-	public void deleteCustomer(DefaultTableModel tableModel, int rowSelected) {
+	/* (non-Javadoc)
+	 * @see cms.business.Operations#deleteCustomer(javax.swing.table.TableModel, int)
+	 */
+	@Override
+	public void deleteCustomer(TableModel tableModel, int rowSelected) {
 		if (rowSelected == -1) {
 			optionDialogs.displayErrorMessage(CHOOSE_ROW_TO_DELETE);			
 		} else {
 			String customerName = tableModel.getValueAt(rowSelected, 0).toString();
 			usedNames.remove(customerName.toUpperCase());
-			tableModel.removeRow(rowSelected);
-			tableModelPersister.save(tableModel);
+			((DefaultTableModel) tableModel).removeRow(rowSelected);
+			persister.save(tableModel);
 			optionDialogs.displayInfoMessage(CUSTOMER_DELETED);
 		}
 	}
 
-	public String[] readRow(DefaultTableModel tableModel, int rowSelected) {
+	/* (non-Javadoc)
+	 * @see cms.business.Operations#readRow(javax.swing.table.TableModel, int)
+	 */
+	@Override
+	public String[] readRow(TableModel tableModel, int rowSelected) {
 		String[] result = new String[COLUMNS_COUNT];
 
 		for (int i = 0; i < COLUMNS_COUNT; i++) {

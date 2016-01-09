@@ -3,8 +3,6 @@ package cms.view;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.KeyboardFocusManager;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -54,8 +52,7 @@ public class CustomerPanel extends JPanel {
 		customerNameTextField.setDocument(new JTextLimit(50));		
 		
 		locationTown = new JComboBox(TOWNS);		
-		locationTown.setSelectedIndex(0);
-		locationTown.addKeyListener(new NumKeyListener());
+		locationTown.setSelectedIndex(0);		
 		
 		notesTextArea = new JTextArea();
 		notesTextArea.setWrapStyleWord(true);
@@ -134,29 +131,6 @@ public class CustomerPanel extends JPanel {
 	}
 	
 	public JButton getLogoFileButton() {
-		return contractFileButton;
-	}
-
-	
-	private class NumKeyListener implements KeyListener {		
-		
-		public void keyTyped(KeyEvent e) {}			
-		
-		@Override
-		public void keyReleased(KeyEvent e) {
-			if (e.getKeyChar() == '1') {
-				locationTown.setSelectedIndex(1);
-			} else if (e.getKeyChar() == '2') {
-				locationTown.setSelectedIndex(2);
-			} else if (e.getKeyChar() == '3') {
-				locationTown.setSelectedIndex(3);
-			} else if (e.getKeyChar() == '4') {
-				locationTown.setSelectedIndex(4);
-			} else {
-				locationTown.setEditable(true);
-			}				
-		}			
-		
-		public void keyPressed(KeyEvent e) {}
+		return logoFileButton;
 	}
 }

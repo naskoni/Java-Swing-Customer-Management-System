@@ -45,7 +45,7 @@ public class DetailedInfoPanel extends JPanel {
 		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));		
 		
-		customerNameLabel = new JLabel("Name of client: ");
+		customerNameLabel = new JLabel("Name of customer: ");
 		
 		locationLabel = new JLabel("Location: ");		
 		

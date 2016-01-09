@@ -19,21 +19,26 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableModel;
 
-import cms.business.Operations;
+import cms.business.OperationsImpl;
 import cms.controllers.CustomerPanelController;
+import cms.interfaces.Operations;
+import cms.interfaces.Persister;
 import cms.persistance.TableModelPersister;
 
 public final class MainFrame {
 	
 	private JFrame mainFrame;
-	private DefaultTableModel tableModel;
+	private TableModel tableModel;
 	private JTable table;
 	private JPanel controlPanel;
 	private DetailedInfoPanel detailedPanel;
 	
-	private final TableModelPersister tableModelPersister = new TableModelPersister();
+	private final Persister persister = new TableModelPersister();
 	private final MainController mainController = new MainController();	
 
 	public MainFrame() {
@@ -61,11 +66,12 @@ public final class MainFrame {
 		
 		JScrollPane paneTable = new JScrollPane();		
 		paneTable.setViewportView(table);		
-		tableModel = tableModelPersister.loadTableModel();
+		tableModel = persister.load();
 		table.addMouseListener(mainController);		
 		table.setModel(tableModel);
 		table.removeColumn(table.getColumnModel().getColumn(5));
 		table.removeColumn(table.getColumnModel().getColumn(4));
+		table.getSelectionModel().addListSelectionListener(mainController);
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;        
@@ -113,32 +119,29 @@ public final class MainFrame {
 		mainFrame.setVisible(true); 
 	}	
 
-	private class MainController implements ActionListener, MouseListener {
+	private class MainController implements ActionListener, MouseListener, ListSelectionListener {
 		
-		private final Operations operations = new Operations();		
+		private final Operations operations = new OperationsImpl();		
 		
+		@Override
 		public void actionPerformed(ActionEvent ae) {
 			String command = ae.getActionCommand();  
-			if (command.equals("Add"))  {				
-				//CustomerPanel panel = new CustomerPanel();
+			if (command.equals("Add"))  {	
 				CustomerPanelController customerPanelController = new CustomerPanelController();
 				operations.addNewCustomer(tableModel, customerPanelController.getCustomerPanel());	
 			} else if (command.equals("Edit"))  {
-				this.editCustomer();
+				editCustomer();
 			} else if (command.equals("Delete")) {
 				int rowSelected = table.getSelectedRow();
 				operations.deleteCustomer(tableModel, rowSelected);
-				this.showDetailedInfo(tableModel, detailedPanel, -1);
+				showDetailedInfo(-1);
 			}  	
 		}
 		
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() == 2) {
-				this.editCustomer();
-			} else if (e.getClickCount() == 1) {				
-				int rowSelected = table.getSelectedRow();
-				this.showDetailedInfo(tableModel, detailedPanel, rowSelected);
+				editCustomer();
 			}
 		}
 
@@ -150,24 +153,30 @@ public final class MainFrame {
 
 		public void mouseReleased(MouseEvent e) {}
 		
-		private void editCustomer() {
-			int rowSelected = table.getSelectedRow();
-			//CustomerPanel customerPanel = new CustomerPanel();
-			CustomerPanelController customerPanelController = new CustomerPanelController();			
-			operations.editCustomer(tableModel, customerPanelController.getCustomerPanel(), rowSelected);
-			this.showDetailedInfo(tableModel, detailedPanel, rowSelected);
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+            if (!lsm.isSelectionEmpty()) {
+            	int rowSelected = lsm.getMinSelectionIndex();
+                showDetailedInfo(rowSelected);
+            } 
 		}
 		
-		private void showDetailedInfo(DefaultTableModel tableModel, 
-				DetailedInfoPanel detailedPanel, int rowSelected) {
+		private void editCustomer() {
+			int rowSelected = table.getSelectedRow();			
+			CustomerPanelController customerPanelController = new CustomerPanelController();			
+			operations.editCustomer(tableModel, customerPanelController.getCustomerPanel(), rowSelected);
+			showDetailedInfo(rowSelected);
+		}
+		
+		private void showDetailedInfo(int rowSelected) {
 			if (rowSelected == -1) {
 				detailedPanel.getCustomerNameTextField().setText("");
 				detailedPanel.getlocationTextField().setText("");
 				detailedPanel.getNotesTextArea().setText("");
 				detailedPanel.getContractDateTextField().setText("");
 				detailedPanel.getContractFileLinkLabel().setText("");
-				detailedPanel.getImageLabel().setIcon(null);
-				
+				detailedPanel.getImageLabel().setIcon(null);				
 			} else {
 				String[] SelectedClientDetails = operations.readRow(tableModel, rowSelected);
 				

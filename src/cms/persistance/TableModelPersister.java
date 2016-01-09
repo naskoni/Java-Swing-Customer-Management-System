@@ -11,11 +11,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
+import cms.interfaces.Persister;
 import cms.view.DefaultTableModelPersistenceDelegate;
 import cms.view.OptionDialogs;
 
-public class TableModelPersister {
+public class TableModelPersister implements Persister {
 	
 	private static final String FILE_CANNOT_BE_FOUND_OR_CREATED = "The file \"data.xml\" can not "
 			+ "be created or accessed. The program can not continue.";
@@ -28,7 +30,11 @@ public class TableModelPersister {
 	public TableModelPersister() {		
 	}
 
-	public DefaultTableModel loadTableModel() {
+	/* (non-Javadoc)
+	 * @see cms.persistance.Persister#load()
+	 */
+	@Override
+	public TableModel load() {
 		DefaultTableModel tableModel = null;
 		
 		if (data.exists()) {		
@@ -49,7 +55,11 @@ public class TableModelPersister {
 		return tableModel; 		
 	}
 	
-	public void save(DefaultTableModel tableModel) {		
+	/* (non-Javadoc)
+	 * @see cms.persistance.Persister#save(javax.swing.table.TableModel)
+	 */
+	@Override
+	public void save(TableModel tableModel) {		
 		try (XMLEncoder encoder = new XMLEncoder(new FileOutputStream(data))) {
 			encoder.setPersistenceDelegate(DefaultTableModel.class,
 					new DefaultTableModelPersistenceDelegate());
