@@ -25,12 +25,15 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
 
 import cms.business.OperationsImpl;
+import cms.business.TableReaderImpl;
 import cms.controllers.CustomerPanelController;
 import cms.interfaces.Operations;
-import cms.interfaces.Persister;
-import cms.persistance.TableModelPersister;
+import cms.interfaces.TableModelPersister;
+import cms.interfaces.TableReader;
+import cms.persistance.TableModelPersisterImpl;
 
 public final class MainFrame {
+	
 	
 	private JFrame mainFrame;
 	private TableModel tableModel;
@@ -38,7 +41,8 @@ public final class MainFrame {
 	private JPanel controlPanel;
 	private DetailedInfoPanel detailedPanel;
 	
-	private final Persister persister = new TableModelPersister();
+	private final TableModelPersister persister = new TableModelPersisterImpl();
+	private final TableReader tableReader = new TableReaderImpl();
 	private final MainController mainController = new MainController();	
 
 	public MainFrame() {
@@ -178,7 +182,7 @@ public final class MainFrame {
 				detailedPanel.getContractFileLinkLabel().setText("");
 				detailedPanel.getImageLabel().setIcon(null);				
 			} else {
-				String[] SelectedClientDetails = operations.readRow(tableModel, rowSelected);
+				String[] SelectedClientDetails = tableReader.readRow(tableModel, rowSelected);
 				
 				detailedPanel.getCustomerNameTextField().setText(SelectedClientDetails[0]);
 				detailedPanel.getlocationTextField().setText(SelectedClientDetails[1]);

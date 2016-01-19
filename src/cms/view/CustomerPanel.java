@@ -16,6 +16,8 @@ public class CustomerPanel extends JPanel {
 	
 	private static final long serialVersionUID = -5775831575172282430L;	
 	private static final String[] TOWNS = { "", "Sofia", "Plovdiv", "Varna", "Burgas" };
+	private static final int CUSTOMER_NAME_LIMIT = 50;
+	private static final int NOTES_LIMIT = 2000;
 	
 	private JLabel customerNameLabel;
 	private JLabel locationLabel;
@@ -49,7 +51,7 @@ public class CustomerPanel extends JPanel {
 		requiredLabel = new JLabel("    * - required field");
 		
 		customerNameTextField = new JTextField();
-		customerNameTextField.setDocument(new JTextLimit(50));		
+		customerNameTextField.setDocument(new JTextLimit(CUSTOMER_NAME_LIMIT));		
 		
 		locationTown = new JComboBox(TOWNS);		
 		locationTown.setSelectedIndex(0);		
@@ -57,7 +59,7 @@ public class CustomerPanel extends JPanel {
 		notesTextArea = new JTextArea();
 		notesTextArea.setWrapStyleWord(true);
 		notesTextArea.setLineWrap(true);
-		notesTextArea.setDocument(new JTextLimit(2000));
+		notesTextArea.setDocument(new JTextLimit(NOTES_LIMIT));
 		notesTextArea.setFocusTraversalKeys(
 				KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null);
 		JScrollPane notesPane = new JScrollPane();		

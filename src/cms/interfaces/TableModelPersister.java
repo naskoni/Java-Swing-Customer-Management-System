@@ -2,7 +2,7 @@ package cms.interfaces;
 
 import javax.swing.table.TableModel;
 
-public interface Persister {
+public interface TableModelPersister {
 
 	TableModel load();
 

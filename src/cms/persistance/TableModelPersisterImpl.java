@@ -13,11 +13,11 @@ import java.io.InputStream;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import cms.interfaces.Persister;
+import cms.interfaces.TableModelPersister;
 import cms.view.DefaultTableModelPersistenceDelegate;
 import cms.view.OptionDialogs;
 
-public class TableModelPersister implements Persister {
+public class TableModelPersisterImpl implements TableModelPersister {
 	
 	private static final String FILE_CANNOT_BE_FOUND_OR_CREATED = "The file \"data.xml\" can not "
 			+ "be created or accessed. The program can not continue.";
@@ -27,12 +27,9 @@ public class TableModelPersister implements Persister {
 	private final File data = new File("data.xml");
 	private final OptionDialogs optionDialogs = new OptionDialogs();
 	
-	public TableModelPersister() {		
+	public TableModelPersisterImpl() {		
 	}
-
-	/* (non-Javadoc)
-	 * @see cms.persistance.Persister#load()
-	 */
+	
 	@Override
 	public TableModel load() {
 		DefaultTableModel tableModel = null;
@@ -41,10 +38,10 @@ public class TableModelPersister implements Persister {
 			try (InputStream is = new BufferedInputStream(new FileInputStream(data)); 
 					XMLDecoder xd = new XMLDecoder(is)) {					
 				tableModel = (DefaultTableModel) xd.readObject();
-			}
-			catch (FileNotFoundException fnfe) {
+			} catch (FileNotFoundException fnfe) {
 				optionDialogs.displayErrorMessage(FILE_CANNOT_BE_FOUND_OR_CREATED);				
 			} catch (IOException ioe) {
+				// ignoring this exception
 			}
 		}		
 		
@@ -54,10 +51,7 @@ public class TableModelPersister implements Persister {
 
 		return tableModel; 		
 	}
-	
-	/* (non-Javadoc)
-	 * @see cms.persistance.Persister#save(javax.swing.table.TableModel)
-	 */
+		
 	@Override
 	public void save(TableModel tableModel) {		
 		try (XMLEncoder encoder = new XMLEncoder(new FileOutputStream(data))) {

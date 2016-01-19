@@ -11,7 +11,4 @@ public interface Operations {
 	void editCustomer(TableModel tableModel, CustomerPanel customerPanel, int rowSelected);
 
 	void deleteCustomer(TableModel tableModel, int rowSelected);
-	
-	String[] readRow(TableModel tableModel, int rowSelected);
-
 }

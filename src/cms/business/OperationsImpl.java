@@ -1,15 +1,15 @@
 package cms.business;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import cms.interfaces.InputValidator;
 import cms.interfaces.Operations;
-import cms.interfaces.Persister;
-import cms.persistance.TableModelPersister;
+import cms.interfaces.TableModelPersister;
+import cms.interfaces.TableReader;
+import cms.persistance.TableModelPersisterImpl;
 import cms.view.CustomerPanel;
 import cms.view.OptionDialogs;
 
@@ -23,29 +23,29 @@ public class OperationsImpl implements Operations {
 	private static final String EDIT_CUSTOMER = "Edit customer information: ";
 	private static final String INFO_EDITED = "Information is edited.";
 	private static final String INFO_NOT_EDITED = "No changes have been made.";	
-	private static final String CUSTOMER_DELETED = "Information for selected customer is deleted.";	
+	private static final String CUSTOMER_DELETED = "Information for selected customer is deleted.";
 	
-	private static Validator validator = new Validator();
-	private static OptionDialogs optionDialogs = new OptionDialogs();
-	private static Persister persister = new TableModelPersister();
-	private static Set<String> usedNames = new HashSet<>();
+	private final OptionDialogs optionDialogs = new OptionDialogs();
+	private final TableModelPersister persister = new TableModelPersisterImpl();
+	private final TableReader tableReader = new TableReaderImpl();
+	private final InputValidator validator = new InputValidatorImpl();
 	
 	public OperationsImpl() {		
 	}
-
-	/* (non-Javadoc)
-	 * @see cms.business.Operations#addNewCustomer(javax.swing.table.TableModel, cms.view.CustomerPanel)
-	 */
+	
 	@Override
 	public void addNewCustomer(TableModel tableModel, CustomerPanel customerPanel) {
 		String customerName = "";
 		String date;
+		String[] unputArgs = new String[2];
 		int input = 1;
 		do {
 			input = optionDialogs.displayCustomerPanel(ADD_CUSTOMER, customerPanel);
 			customerName = customerPanel.getCustomerNameTextField().getText().trim();
-			date = customerPanel.getContractDateTextField().getText();
-		} while (input == 0 && !validator.validateNameAndDate(usedNames, customerName, date));		
+			date = customerPanel.getContractDateTextField().getText();			
+			unputArgs[0] = customerName;
+			unputArgs[1] = date;
+		} while (input == 0 && !validator.validate(unputArgs));		
 		
 		if (input == 0) {
 			String[] newCustomerDetails = new String[COLUMNS_COUNT];
@@ -56,23 +56,19 @@ public class OperationsImpl implements Operations {
 			newCustomerDetails[4] = customerPanel.getContractFilePath();
 			newCustomerDetails[5] = customerPanel.getLogoFilePath();
 
-			((DefaultTableModel) tableModel).addRow(newCustomerDetails);
-			usedNames.add(customerName.toUpperCase());
+			((DefaultTableModel) tableModel).addRow(newCustomerDetails);			
 			persister.save(tableModel);
         	optionDialogs.displayInfoMessage(CUSTOMER_ADDED);
 		}  
-	}
+	}	
 	
-	/* (non-Javadoc)
-	 * @see cms.business.Operations#editCustomer(javax.swing.table.TableModel, cms.view.CustomerPanel, int)
-	 */
 	@Override
 	public void editCustomer(TableModel tableModel, 
 			CustomerPanel customerPanel, int rowSelected) {
 		if (rowSelected == -1) {
 			optionDialogs.displayErrorMessage(CHOOSE_ROW_TO_EDIT);
 		} else {
-			String[] oldCustomerDetails = readRow(tableModel, rowSelected);			
+			String[] oldCustomerDetails = tableReader.readRow(tableModel, rowSelected);			
 
 			customerPanel.getCustomerNameTextField().setText(oldCustomerDetails[0]);
 			customerPanel.getLocationTown().setEditable(true);
@@ -80,18 +76,19 @@ public class OperationsImpl implements Operations {
 			customerPanel.getNotesTextArea().setText(oldCustomerDetails[2]);
 			customerPanel.getContractDateTextField().setText(oldCustomerDetails[3]);
 			customerPanel.setContractFilePath(oldCustomerDetails[4]);
-			customerPanel.setLogoFilePath(oldCustomerDetails[5]);
-			
-			usedNames.remove(oldCustomerDetails[0].toUpperCase());
+			customerPanel.setLogoFilePath(oldCustomerDetails[5]);			
 			
 			String customerName = "";
 			String date;
-			int input = 1;			
+			String[] unputArgs = new String[2];
+			int input = 1;
 			do {
 				input = optionDialogs.displayCustomerPanel(EDIT_CUSTOMER, customerPanel);
 				customerName = customerPanel.getCustomerNameTextField().getText().trim();
-				date = customerPanel.getContractDateTextField().getText();
-			} while (input == 0 && !validator.validateNameAndDate(usedNames, customerName, date));			
+				date = customerPanel.getContractDateTextField().getText();			
+				unputArgs[0] = customerName;
+				unputArgs[1] = date;
+			} while (input == 0 && !validator.validate(unputArgs));	
 			
 			if (input == 0) {
 				String[] newCustomerDetails = new String[COLUMNS_COUNT];
@@ -102,49 +99,26 @@ public class OperationsImpl implements Operations {
 				newCustomerDetails[4] = customerPanel.getContractFilePath();
 				newCustomerDetails[5] = customerPanel.getLogoFilePath();
 				
-				if (Arrays.equals(oldCustomerDetails, newCustomerDetails)) {
-					usedNames.add(oldCustomerDetails[0].toUpperCase());
+				if (Arrays.equals(oldCustomerDetails, newCustomerDetails)) {					
 					optionDialogs.displayInfoMessage(INFO_NOT_EDITED);
 				} else {
 					((DefaultTableModel) tableModel).insertRow(rowSelected, newCustomerDetails);
 					((DefaultTableModel) tableModel).removeRow(rowSelected + 1);
-					persister.save(tableModel);
-					usedNames.add(customerName.toUpperCase());
+					persister.save(tableModel);					
 					optionDialogs.displayInfoMessage(INFO_EDITED);
 				}	
-			} else {
-				usedNames.add(oldCustomerDetails[0].toUpperCase());
-			}	
+			} 
 		}
 	}
-
-	/* (non-Javadoc)
-	 * @see cms.business.Operations#deleteCustomer(javax.swing.table.TableModel, int)
-	 */
+	
 	@Override
 	public void deleteCustomer(TableModel tableModel, int rowSelected) {
 		if (rowSelected == -1) {
 			optionDialogs.displayErrorMessage(CHOOSE_ROW_TO_DELETE);			
 		} else {
-			String customerName = tableModel.getValueAt(rowSelected, 0).toString();
-			usedNames.remove(customerName.toUpperCase());
 			((DefaultTableModel) tableModel).removeRow(rowSelected);
 			persister.save(tableModel);
 			optionDialogs.displayInfoMessage(CUSTOMER_DELETED);
 		}
-	}
-
-	/* (non-Javadoc)
-	 * @see cms.business.Operations#readRow(javax.swing.table.TableModel, int)
-	 */
-	@Override
-	public String[] readRow(TableModel tableModel, int rowSelected) {
-		String[] result = new String[COLUMNS_COUNT];
-
-		for (int i = 0; i < COLUMNS_COUNT; i++) {
-			result[i] = (String) tableModel.getValueAt(rowSelected, i);
-		}
-
-		return result;
-	}
+	}	
 }
