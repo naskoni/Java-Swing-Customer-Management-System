@@ -14,8 +14,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import cms.interfaces.TableModelPersister;
-import cms.view.DefaultTableModelPersistenceDelegate;
-import cms.view.OptionDialogs;
+import cms.views.DefaultTableModelPersistenceDelegate;
+import cms.views.OptionDialogs;
 
 public class TableModelPersisterImpl implements TableModelPersister {
 	
@@ -25,10 +25,7 @@ public class TableModelPersisterImpl implements TableModelPersister {
 			"Date of signing the contract", "Contract", "Logo" };
 	
 	private final File data = new File("data.xml");
-	private final OptionDialogs optionDialogs = new OptionDialogs();
-	
-	public TableModelPersisterImpl() {		
-	}
+	private final OptionDialogs optionDialogs = new OptionDialogs();	
 	
 	@Override
 	public TableModel load() {
@@ -63,4 +60,5 @@ public class TableModelPersisterImpl implements TableModelPersister {
 			System.exit(0);
 		} 	
 	}
+	
 }

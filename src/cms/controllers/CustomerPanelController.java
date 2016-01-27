@@ -13,7 +13,7 @@ import java.util.Date;
 
 import javax.swing.JFileChooser;
 
-import cms.view.CustomerPanel;
+import cms.views.CustomerPanel;
 
 public class CustomerPanelController implements KeyListener, FocusListener, ActionListener {
 	
@@ -33,7 +33,6 @@ public class CustomerPanelController implements KeyListener, FocusListener, Acti
 	
 	public void keyTyped(KeyEvent e) {}			
 	
-	@Override
 	public void keyReleased(KeyEvent ke) {}					
 	
 	@Override
@@ -45,21 +44,7 @@ public class CustomerPanelController implements KeyListener, FocusListener, Acti
 			int value = -1;
 			addDay(value);
 		}			
-	}
-	
-	private void addDay(int value) {
-		String content = customerPanel.getContractDateTextField().getText();
-		String format = "dd.MM.yyyy";
-		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		sdf.setLenient(false);
-		try {	
-		Calendar c = Calendar.getInstance();
-		c.setTime(sdf.parse(content));
-		c.add(Calendar.DATE, value);
-		customerPanel.getContractDateTextField().setText(sdf.format(c.getTime()));
-		} catch (ParseException pe) {								
-		}			
-	}		
+	}	
 	
 	public void focusGained(FocusEvent e) {}
 
@@ -95,8 +80,22 @@ public class CustomerPanelController implements KeyListener, FocusListener, Acti
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				customerPanel.setLogoFilePath(fc.getSelectedFile().getAbsolutePath());					
 			}
-		}				
+		}	
 	}
+	
+	private void addDay(int value) {
+		String content = customerPanel.getContractDateTextField().getText();
+		String format = "dd.MM.yyyy";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		sdf.setLenient(false);
+		try {	
+		Calendar c = Calendar.getInstance();
+		c.setTime(sdf.parse(content));
+		c.add(Calendar.DATE, value);
+		customerPanel.getContractDateTextField().setText(sdf.format(c.getTime()));
+		} catch (ParseException pe) {								
+		}			
+	}		
 	
 	private class NumKeyListener implements KeyListener {		
 			

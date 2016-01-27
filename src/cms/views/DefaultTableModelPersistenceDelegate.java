@@ -1,4 +1,4 @@
-package cms.view;
+package cms.views;
 
 import java.beans.DefaultPersistenceDelegate;
 import java.beans.Encoder;

@@ -1,4 +1,4 @@
-package cms.view;
+package cms.views;
 
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;

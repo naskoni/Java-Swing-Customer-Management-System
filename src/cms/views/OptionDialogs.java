@@ -1,4 +1,4 @@
-package cms.view;
+package cms.views;
 
 import javax.swing.JOptionPane;
 
@@ -8,10 +8,7 @@ public class OptionDialogs {
 	private static final String[] CONFIRM_BUTTON_NAME = { "OK" };
 	private static final String ERROR = "Error";
 	private static final String INFO = "Information";
-	
-	public OptionDialogs() {		
-	}
-	
+		
 	public int displayCustomerPanel(String message, CustomerPanel panel) {
 		return JOptionPane.showOptionDialog(null,
 				panel, message, JOptionPane.NO_OPTION, 

@@ -1,4 +1,4 @@
-package cms.view;
+package cms.views;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;

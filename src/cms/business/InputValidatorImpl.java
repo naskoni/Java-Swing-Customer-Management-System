@@ -7,17 +7,14 @@ import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
 
 import cms.interfaces.InputValidator;
-import cms.view.OptionDialogs;
+import cms.views.OptionDialogs;
 
 public class InputValidatorImpl implements InputValidator {
 	
 	private static final String NAME_MUST_BE_FILLED = "Field \"name\" must be filled in!";	
 	private static final String INVALID_DATE = "Invalid date! Enter date in format dd.MM.yyyy!";
 	
-	private final OptionDialogs optionDialogs = new OptionDialogs();	
-	
-	public InputValidatorImpl() {		
-	}	
+	private final OptionDialogs optionDialogs = new OptionDialogs();
 	
 	@Override
 	public boolean validate(String[] inputArgs) {

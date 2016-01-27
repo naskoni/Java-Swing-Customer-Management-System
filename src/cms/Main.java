@@ -1,6 +1,6 @@
 package cms;
 
-import cms.view.MainFrame;
+import cms.views.MainFrame;
 
 public class Main {
 

@@ -10,8 +10,8 @@ import cms.interfaces.Operations;
 import cms.interfaces.TableModelPersister;
 import cms.interfaces.TableReader;
 import cms.persistance.TableModelPersisterImpl;
-import cms.view.CustomerPanel;
-import cms.view.OptionDialogs;
+import cms.views.CustomerPanel;
+import cms.views.OptionDialogs;
 
 public class OperationsImpl implements Operations {
 
@@ -29,10 +29,7 @@ public class OperationsImpl implements Operations {
 	private final TableModelPersister persister = new TableModelPersisterImpl();
 	private final TableReader tableReader = new TableReaderImpl();
 	private final InputValidator validator = new InputValidatorImpl();
-	
-	public OperationsImpl() {		
-	}
-	
+		
 	@Override
 	public void addNewCustomer(TableModel tableModel, CustomerPanel customerPanel) {
 		String customerName = "";

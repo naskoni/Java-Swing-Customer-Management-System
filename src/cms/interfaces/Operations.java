@@ -2,7 +2,7 @@ package cms.interfaces;
 
 import javax.swing.table.TableModel;
 
-import cms.view.CustomerPanel;
+import cms.views.CustomerPanel;
 
 public interface Operations {
 
