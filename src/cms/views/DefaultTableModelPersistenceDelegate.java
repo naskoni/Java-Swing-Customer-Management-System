@@ -7,30 +7,27 @@ import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
-public class DefaultTableModelPersistenceDelegate extends DefaultPersistenceDelegate {    
+public class DefaultTableModelPersistenceDelegate extends DefaultPersistenceDelegate {
 
-    @Override
-    protected void initialize(Class<?> type, Object oldInstance, Object newInstance, Encoder encoder)
-    {
-        DefaultTableModel model = (DefaultTableModel)oldInstance;
+	@Override
+	protected void initialize(Class<?> type, Object oldInstance, Object newInstance, Encoder encoder) {
+		DefaultTableModel model = (DefaultTableModel) oldInstance;
 
-        Vector<String> columnNames = new Vector<String>(model.getColumnCount());
+		Vector<String> columnNames = new Vector<>(model.getColumnCount());
 
-        for (int i = 0; i < model.getColumnCount(); i++)
-        {
-            columnNames.add(model.getColumnName(i));
-        }
+		for (int i = 0; i < model.getColumnCount(); i++) {
+			columnNames.add(model.getColumnName(i));
+		}
 
-        Object[] columnNamesData = new Object[] { columnNames };
-        encoder.writeStatement(new Statement(oldInstance, "setColumnIdentifiers", columnNamesData));
+		Object[] columnNamesData = new Object[] { columnNames };
+		encoder.writeStatement(new Statement(oldInstance, "setColumnIdentifiers", columnNamesData));
 
-        @SuppressWarnings("rawtypes")
+		@SuppressWarnings("rawtypes")
 		Vector row = model.getDataVector();
 
-        for (int i = 0; i < model.getRowCount(); i++)
-        {
-            Object[] rowData = new Object[] { row.get(i) };
-            encoder.writeStatement(new Statement(oldInstance, "addRow", rowData));
-        }
-    }
+		for (int i = 0; i < model.getRowCount(); i++) {
+			Object[] rowData = new Object[] { row.get(i) };
+			encoder.writeStatement(new Statement(oldInstance, "addRow", rowData));
+		}
+	}
 }
