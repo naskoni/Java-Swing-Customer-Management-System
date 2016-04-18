@@ -3,6 +3,8 @@ package cms.business;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
@@ -13,6 +15,7 @@ public class InputValidatorImpl implements InputValidator {
 
 	private static final String NAME_MUST_BE_FILLED = "Field \"name\" must be filled in!";
 	private static final String INVALID_DATE = "Invalid date! Enter date in format dd.MM.yyyy!";
+	private static final Logger logger = Logger.getLogger(InputValidatorImpl.class.getName());
 
 	private final OptionDialogs optionDialogs = new OptionDialogs();
 
@@ -39,7 +42,8 @@ public class InputValidatorImpl implements InputValidator {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 				@SuppressWarnings("unused")
 				LocalDate d = LocalDate.parse(date, formatter);
-			} catch (DateTimeParseException pe) {
+			} catch (DateTimeParseException e) {
+				logger.log(Level.WARNING, "Date cannot be parsed", e);
 				JOptionPane.showMessageDialog(null, INVALID_DATE);
 				return false;
 			}

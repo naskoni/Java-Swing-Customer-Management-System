@@ -11,7 +11,7 @@ public class ImageLabel extends JLabel {
 
 	private static final long serialVersionUID = -4398639261717716734L;
 
-	private Image logoImage;
+	private transient Image logoImage;
 
 	public ImageLabel() {
 		super();

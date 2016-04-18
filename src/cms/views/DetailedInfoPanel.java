@@ -8,6 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -19,6 +21,8 @@ import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class DetailedInfoPanel extends JPanel {
+
+	private static final Logger logger = Logger.getLogger(DetailedInfoPanel.class.getName());
 
 	private JLabel customerNameLabel;
 	private JLabel locationLabel;
@@ -62,11 +66,11 @@ public class DetailedInfoPanel extends JPanel {
 		contractFileLinkLabel.setForeground(Color.blue);
 		contractFileLinkLabel.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent event) {
 				try {
 					Desktop.getDesktop().open(new File(contractFileLinkLabel.getName()));
-				} catch (IOException ioe) {
-					// do nothing
+				} catch (IOException e) {
+					logger.log(Level.WARNING, "File cannot be opened", e);
 				}
 			}
 		});
@@ -77,11 +81,11 @@ public class DetailedInfoPanel extends JPanel {
 		imageLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		imageLabel.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent event) {
 				try {
 					Desktop.getDesktop().open(new File(imageLabel.getName()));
-				} catch (IOException ioe) {
-					// do nothing
+				} catch (IOException e) {
+					logger.log(Level.WARNING, "File cannot be opened", e);
 				}
 			}
 		});
