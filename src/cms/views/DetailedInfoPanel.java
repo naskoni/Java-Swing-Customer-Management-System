@@ -79,7 +79,13 @@ public class DetailedInfoPanel extends JPanel {
 		imageLabel.setPreferredSize(new Dimension(200, 200));
 		imageLabel.setSize(new Dimension(200, 200));
 		imageLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		imageLabel.addMouseListener(new MouseAdapter() {
+		imageLabel.addMouseListener(new MouseAdapter() { // NOSONAR : This
+															// anonymous class
+															// cannot be made a
+															// lambda, because
+															// it not implements
+															// a functional
+															// interface
 			@Override
 			public void mouseClicked(MouseEvent event) {
 				try {

@@ -52,7 +52,7 @@ public final class MainFrame {
 		frame = new JFrame("Customer Management System");
 		frame.setSize(800, 600);
 		frame.setLayout(new GridBagLayout());
-		frame.addWindowListener(new WindowAdapter() {
+		frame.addWindowListener(new WindowAdapter() { // NOSONAR : This anonymous class cannot be made a lambda, because it not implements a functional interface.
 			@Override
 			public void windowClosing(WindowEvent windowEvent) {
 				System.exit(0);
