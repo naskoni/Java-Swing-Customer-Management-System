@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -20,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableModel;
@@ -52,12 +51,7 @@ public final class MainFrame {
 		frame = new JFrame("Customer Management System");
 		frame.setSize(800, 600);
 		frame.setLayout(new GridBagLayout());
-		frame.addWindowListener(new WindowAdapter() { // NOSONAR : This anonymous class cannot be made a lambda, because it not implements a functional interface.
-			@Override
-			public void windowClosing(WindowEvent windowEvent) {
-				System.exit(0);
-			}
-		});
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		table = new JTable() {
 			private static final long serialVersionUID = 147848978001448883L;

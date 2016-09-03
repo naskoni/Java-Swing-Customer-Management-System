@@ -64,7 +64,7 @@ public class DetailedInfoPanel extends JPanel {
 		contractFileLinkLabel = new JLabel();
 		contractFileLinkLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		contractFileLinkLabel.setForeground(Color.blue);
-		contractFileLinkLabel.addMouseListener(new MouseAdapter() {
+		contractFileLinkLabel.addMouseListener(new MouseAdapter() { // NOSONAR
 			@Override
 			public void mouseClicked(MouseEvent event) {
 				try {

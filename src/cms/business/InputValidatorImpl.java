@@ -40,8 +40,7 @@ public class InputValidatorImpl implements InputValidator {
 		if (!date.isEmpty()) {
 			try {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-				@SuppressWarnings("unused")
-				LocalDate d = LocalDate.parse(date, formatter);
+				LocalDate.parse(date, formatter);
 			} catch (DateTimeParseException e) {
 				logger.log(Level.WARNING, "Date cannot be parsed", e);
 				JOptionPane.showMessageDialog(null, INVALID_DATE);

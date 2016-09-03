@@ -9,7 +9,6 @@ import java.awt.event.KeyListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.JFileChooser;
 
@@ -63,8 +62,7 @@ public class CustomerPanelController implements KeyListener, FocusListener, Acti
 		if (!content.isEmpty() && content.length() <= 5) {
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM");
-				@SuppressWarnings("unused")
-				Date date = sdf.parse(content);
+				sdf.parse(content);
 				Calendar c = Calendar.getInstance();
 				String newDate = content + "." + c.get(Calendar.YEAR);
 				customerPanel.getContractDateTextField().setText(newDate);
